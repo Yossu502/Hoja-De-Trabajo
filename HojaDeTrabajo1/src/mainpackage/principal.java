@@ -6,6 +6,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public class principal extends javax.swing.JFrame {
 
+    Hilo hilo1 = new Hilo(1);
+    Hilo hilo2 = new Hilo(2);
+    
     public principal() {
         initComponents();
     }
@@ -32,6 +35,11 @@ public class principal extends javax.swing.JFrame {
         jLabel1.setText("Ingrese Numero");
 
         numbt.setText("Aceptar");
+        numbt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numbtActionPerformed(evt);
+            }
+        });
 
         letasbt.setText("Aceptar");
 
@@ -99,6 +107,14 @@ public class principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void numbtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numbtActionPerformed
+        // TODO add your handling code here:
+        
+        hilo1.setContador(Integer.valueOf(numerofield.getText()));
+        hilo1.start();
+        
+    }//GEN-LAST:event_numbtActionPerformed
+
     public static void main(String args[]) {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -111,6 +127,37 @@ public class principal extends javax.swing.JFrame {
         });
     }
 
+    public class Hilo extends Thread{
+    int contador = 0;
+    int numLabel = 0;
+    
+    public Hilo(int num){
+        this.numLabel = num;
+    }
+
+    public void setContador(int contador) {
+        this.contador = contador;
+    }
+
+  
+    @Override
+    public void run(){
+        contadorlbl.setText(String.valueOf(contador));
+        if (numLabel == 1) {
+            while (contador < 100) {                    
+                contador++;
+                contadorlbl.setText(String.valueOf(contador));
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+  }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel contadorlbl;
     private javax.swing.JComboBox<String> jComboBox1;
