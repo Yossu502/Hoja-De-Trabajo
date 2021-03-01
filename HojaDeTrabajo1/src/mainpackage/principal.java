@@ -1,5 +1,7 @@
 package mainpackage;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -11,6 +13,11 @@ public class principal extends javax.swing.JFrame {
     
     public principal() {
         initComponents();
+        setLocationRelativeTo(null);
+        this.setTitle("Hoja de trabajo 1");
+        this.setResizable(false);
+        contadorlbl.setText("0");
+        letraslbl.setText("a");
     }
 
     @SuppressWarnings("unchecked")
@@ -42,6 +49,11 @@ public class principal extends javax.swing.JFrame {
         });
 
         letasbt.setText("Aceptar");
+        letasbt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                letasbtActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Ingrese Numero");
@@ -115,6 +127,22 @@ public class principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_numbtActionPerformed
 
+    private void letasbtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_letasbtActionPerformed
+        char hola = letrasfield.getText().charAt(0);
+        int asciiValue1 = hola;
+        hilo2.setIniciar(hola);
+        hilo2.setAsciiValue(asciiValue1);
+        hilo2.start();
+    }//GEN-LAST:event_letasbtActionPerformed
+
+    public void letrapruebas(){
+        char iniciar = letrasfield.getText().charAt(0);
+        int asciiValue = iniciar;
+        asciiValue++;
+        String cadena = Character.toString((char) asciiValue);
+        System.out.println(cadena);
+    }
+    
     public static void main(String args[]) {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -130,6 +158,8 @@ public class principal extends javax.swing.JFrame {
     public class Hilo extends Thread{
     int contador = 0;
     int numLabel = 0;
+    char iniciar;
+    int asciiValue;
     
     public Hilo(int num){
         this.numLabel = num;
@@ -137,6 +167,14 @@ public class principal extends javax.swing.JFrame {
 
     public void setContador(int contador) {
         this.contador = contador;
+    }
+    
+    public void setIniciar(char iniciar) {
+        this.iniciar = iniciar;
+    }
+
+    public void setAsciiValue(int asciiValue) {
+        this.asciiValue = asciiValue;
     }
 
   
@@ -153,7 +191,18 @@ public class principal extends javax.swing.JFrame {
                     Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        }
+        }else if(numLabel == 2){
+                while (asciiValue < 122) {                    
+                    asciiValue++;
+                    String cadena = Character.toString((char) asciiValue);
+                    letraslbl.setText(cadena);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
     }
   }
     
